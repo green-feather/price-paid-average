@@ -3,23 +3,26 @@
 ## CRUD API
   
   This module has the following functions:
-  ### 1. CREATE
+  ### 1. Create new stock/company
 
   ```sh
   POST - /api/price/:stockId
   ```
 
-  ### 2. READ
-  The components can retrieve the booked dates from the database for a specific accommodation
+  ### 2. Show prices for one stock
 
   ```sh
   GET - /api/price/:stockId
   ```
 
-  ### 3. UPDATE
-  The components can update the booked dates from the database for a specific accommodation
+  ### 3. Update prices for one stock
   
   ```sh
   PATCH - /api/price/:stockId
   ```
-  - *There is no delete API for this component*
+  
+   ### 4. Delete price history for one stock
+  
+  ```sh
+  DELETE - /api/price/:stockId
+  ```

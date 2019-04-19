@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-undef */
 const db = require('../index.js');
-const Stock = require('./StockScheme.js');
+const StockSchema = require('./StockSchema.js');
 const companyData = require('../stockList.js');
+const faker = require('faker');
 
 const sampleStock = [];
 
@@ -24,9 +25,23 @@ for (const company of companyData) {
   }
 }
 
-const insertSampleStocks = function () {
-  Stock.create(sampleStock)
-    .then(() => db.close());
-};
+console.log(sampleStock[99999]);
 
-insertSampleStocks();
+console.log(sampleStock.length);
+
+// const insertSampleStocks = function () {
+//   StockSchema.Stock.create(sampleStock)
+//     .then(() => db.close());
+// };
+// insertSampleStocks();
+
+
+
+// const insertRecords = function() {
+//   StockSchema.Company.create(companyData)
+//   .then(() => console.log('done adding company ids'))
+//   .then(() => db.close());
+// }
+// insertRecords();
+
+module.exports = companyData;

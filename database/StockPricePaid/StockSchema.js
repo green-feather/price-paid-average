@@ -10,6 +10,13 @@ const stockSchema = new mongoose.Schema({
   ticker: String,
 });
 
-const Stock = mongoose.model('Stock', stockSchema);
+const companySchema = new mongoose.Schema({
+  id: String,
+  ticker: String,
+});
 
-module.exports = Stock;
+const Stock = mongoose.model('Stock', stockSchema);
+const Company = mongoose.model('Companies', companySchema);
+
+module.exports.Stock = Stock;
+module.exports.Company = Company;

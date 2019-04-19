@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const Stock = require('./StockPricePaid/StockScheme.js');
+const StockSchema = require('./StockPricePaid/StockSchema.js');
 
-const mongoUri = 'mongodb://172.17.0.2/stock';
+// const mongoUri = 'mongodb://172.17.0.2/stock';
 // const mongoUri = 'mongodb://gary:abcd1234@ds031922.mlab.com:31922/front-end-capstone-project';
 // const mongoUri = process.env.DATABASEURL;
+const mongoUri = 'mongodb://localhost/stock'
 mongoose.connect(mongoUri, { useNewUrlParser: true },
   (err) => {
     if (err) {
@@ -16,7 +17,7 @@ const db = mongoose.connection;
 
 const getPaidPrice = (id, callback) => {
   const query = { id };
-  Stock.find(query, (err, data) => {
+  StockSchema.Stock.find(query, (err, data) => {
     if (err) callback(err);
     callback(data);
   });

@@ -16,7 +16,7 @@
     "heroku-postbuild": "webpack -d",
     "webpack-client": "webpack -d --watch",
     "webpack-server": "nodemon server/server.js",
-    "db:setup": "node database/StockPricePaid/stockSeed.js",
+    "seed": "node database/StockPricePaid/stockSeed.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --colors"

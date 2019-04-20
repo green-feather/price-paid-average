@@ -6,7 +6,9 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 8080;
-const db = require('../database/index.js');
+// const db = require('../database/index.js');
+const db = require('../database/nosql/index');
+
 
 app.use(express.static(`${__dirname}/../public/`));
 app.use(cors());

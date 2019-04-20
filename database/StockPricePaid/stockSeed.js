@@ -4,38 +4,55 @@ const db = require('../index.js');
 const StockSchema = require('./StockSchema.js');
 const companyData = require('../stockList.js');
 const faker = require('faker');
+const fs = require('fs');
+// const Writable = require('stream').Writable;
 
-const sampleStock = [];
-
-for (const company of companyData) {
-  const companyName = company.company;
+let sampleStock = {};
+function generateStock() {
+  const priceArray = [];
   let price = Math.random() * 1000;
-  for (let day = 0; day < 252; day += 1) {
+  for (let day = 0; day < 63; day += 1) {
     let range = Math.floor(Math.random() * 100);
     range *= Math.floor(Math.random() * 2) === 1 ? 0.05 : -0.047;
     price *= (1 + range / 100);
     price = price.toFixed(2);
-    sampleStock.push({
-      company: companyName,
-      price: Number(price),
-      day,
-      id: company.id,
-      ticker: company.ticker,
-    });
+    priceArray.push({day, price: Number(price)});
   }
+  sampleStock.prices = priceArray;
+  return sampleStock;
 }
 
-console.log(sampleStock[99999]);
 
-console.log(sampleStock.length);
+// const sampleStock = [];
 
-// const insertSampleStocks = function () {
-//   StockSchema.Stock.create(sampleStock)
-//     .then(() => db.close());
-// };
-// insertSampleStocks();
+// function generateStock() {
+//   for (const company of companyData) {
+//     const companyName = company.company;
+//     let price = Math.random() * 1000;
+//     for (let day = 0; day < 63; day += 1) {
+//       let range = Math.floor(Math.random() * 100);
+//       range *= Math.floor(Math.random() * 2) === 1 ? 0.05 : -0.047;
+//       price *= (1 + range / 100);
+//       price = price.toFixed(2);
+//       sampleStock.push({
+//         company: companyName,
+//         price: Number(price),
+//         day,
+//         id: company.id,
+//         ticker: company.ticker,
+//       });
+//     }
+//   }
+// }
 
+// fs.createWriteStream('seedtest.txt', )
+// var file = fs.createWriteStream('')
 
+const insertSampleStocks = function () {
+  StockSchema.Stock.create(sampleStock)
+    .then(() => db.close());
+};
+insertSampleStocks();
 
 // const insertRecords = function() {
 //   StockSchema.Company.create(companyData)
@@ -45,3 +62,4 @@ console.log(sampleStock.length);
 // insertRecords();
 
 module.exports = companyData;
+module.exports.generateStock = generateStock;

@@ -4,10 +4,9 @@ mongoose.Promise = global.Promise;
 
 const stockSchema = new mongoose.Schema({
   id: String,
-  company: String,
-  price: Number,
-  day: Number,
   ticker: String,
+  company: String,
+  prices: Number,
 });
 
 const companySchema = new mongoose.Schema({

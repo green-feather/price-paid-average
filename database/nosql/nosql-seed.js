@@ -54,7 +54,7 @@ writableStream.write(`${headerline.join('\t')}\n`)
 // compress.pipe(writableStream);
 
 function writeManyTimes(writer, encoding, callback) {
-  let i = 100;
+  let i = 10000000;
   write();
   function write() {
     let ok = true;

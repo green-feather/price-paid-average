@@ -1,33 +1,24 @@
 import React from 'react';
+import '../styles.css';
 
-class Chart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  render() {
-    // console.log(this.props);
-    const occurence = this.props.priceData[0];
-    const highlight = this.props.priceData[1];
-    const lineDisplay = this.props.priceData[2];
-    const id = this.props.priceData[3];
-
-    const divStyle = {
-      height: occurence * 4.3 > 120 ? 120 : occurence * 4.3,
-      background: highlight ? '#21CE99' : 'black',
-    };
-    const lineStyle = {
-      display: lineDisplay ? 'inline-block' : 'none',
-    };
-    return (
-   <div className = 'priceChartBar' >
-    <div className = 'priceChartDiv' style={divStyle}></div>
-    <div id='average-line' style={lineStyle}></div>
-   </div>
-    );
-  }
-}
+const Chart = (props) => {
+  const occurrence = props.priceData[0];
+  const highlight = props.priceData[1];
+  const lineDisplay = props.priceData[2];
+  const id = props.priceData[3];
+  const divStyle = {
+    height: occurrence * 4.3 > 120 ? 120 : occurrence * 4.3,
+    background: highlight ? '#21CE99' : 'black',
+  };
+  const lineStyle = {
+    display: lineDisplay ? 'inline-block' : 'none',
+  };
+  return (
+    <div className = 'priceChartBar' >
+      <div className = 'priceChartDiv' style={divStyle}></div>
+      <div id='average-line' style={lineStyle}></div>
+    </div>
+  );
+};
 
 export default Chart;

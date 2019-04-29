@@ -6,7 +6,7 @@ const nosqlSchema = new mongoose.Schema({
   id: String,
   ticker: String,
   company: String,
-  prices: Number,
+  prices: Array,
 });
 
 const CompanyPrices = mongoose.model('Companies', nosqlSchema);

@@ -1,6 +1,7 @@
 import React from 'react';
 import Chart from './chart.jsx';
-import $ from 'jquery';
+import axios from 'axios';
+import '../styles.css';
 
 // const port = '52.53.224.110';
 const port = 'localhost';
@@ -12,16 +13,51 @@ class AveragePrice extends React.Component {
     this.state = {
       price: [],
     };
+    this._isMounted = false;
   }
 
   componentDidMount() {
-    $.get(`http://${port}:8080/api/price${path}`, (stockData) => {
-      const priceData = [];
-      stockData.map(stock => priceData.push(stock.price));
-      this.setState({
-        price: priceData,
-      });
-    });
+    const splitUrl = window.location.pathname.split('/');
+    const cId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
+    // this.getPrices(cId);
+    this._isMounted = true;
+    this._isMounted && this.getPrices(cId);
+  }
+  // componentDidMount() {
+  //   this.getPrices(path);
+    // $.get(`http://${port}:8080/api/price/${path}`, (stockData) => {
+    //   const priceData = [];
+    //   console.log(stockdata);
+      // this.setState({
+      //   price: stockData
+      // })
+      // stockData.map(stock => priceData.push(stock.price));
+      // this.setState({
+      //   price: priceData,
+      // });
+    // });
+  // }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+ }
+
+  getPrices(cId) {
+    fetch(`/api/price/${cId}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then((data) => {
+        if (this._isMounted) {
+          const priceData = data[0].prices;
+          this.setState({
+            price: priceData,
+          })
+        }
+      })
+      .catch((err) => console.log(err))
   }
 
   render() {
@@ -46,15 +82,15 @@ class AveragePrice extends React.Component {
       const tempHigh = lowest + barRange * (i + 1);
       let highLight = false;
       let averageLine = false;
-      let occurence = sortPriceData.filter(price => price >= tempLow && price <= tempHigh).length;
-      occurence === 0 ? occurence = 1: null;
+      let occurrence = sortPriceData.filter(price => price >= tempLow && price <= tempHigh).length;
+      occurrence === 0 ? occurrence = 1: null;
       currentPrice > averagePrice 
       ? averagePrice < tempLow - barRange && tempHigh - barRange <= currentPrice
         ? highLight = true : null
       : averagePrice > tempLow - 2 * barRange && tempHigh > currentPrice + barRange
         ? highLight = true : null;
       i === currentSpot ? averageLine = true : null;
-      allData.push([occurence, highLight, averageLine, i]);
+      allData.push([occurrence, highLight, averageLine, i]);
     }
 
     // find the spot for current price
@@ -74,35 +110,34 @@ class AveragePrice extends React.Component {
       compare = `${Math.abs(percentage)}% Lower`;
     }
     return (
-  <div className="Components">
-   <p className='topic'>Price Paid on Robinhood</p>
-   <div className='line'></div>
-   <div id = 'compare' style={{ left: compareLoc }}>
-    <div style={{ position: 'absolute'}}>
-      <p id = 'compare'>{compare}</p>
-      <p id = 'rightNow'>Right Now</p>
-    </div>
-   </div>
-   <div id = 'chart' >
-    {allData.map(priceData => <Chart key = {priceData[3]} priceData = {priceData} />)}
-   </div>
-   <div className='bottomLine'>
-    <span id = 'bottomFrontLine' style={{ width: curPriceDis > 670 ? 670 : curPriceDis }}></span>
-    <span id = 'circle' ></span>
-    <span id = 'bottomRareLine' style={{ width: 670 - curPriceDis }}></span>
-   </div>
-
-    <div style={{ display: 'inline-block', width: '670px' }}>
-      <div id = 'lowest'>52 Week Low
-      <p id='lowest'>${lowest}</p></div>
-      <div id = 'averagePricePaid' style={{ marginLeft: avgPriceDis ? avgPriceDis : 0 }}>
-        <p className='averagePricePaid'>Average Price Paid</p>
-        <p className='averagePricePaid' id='averagePricePaid'>${averagePrice}</p>
+      <div className="Components">
+      <p className='topic'>Price Paid on Robinhood</p>
+      <div className='line'></div>
+      <div id = 'compare' style={{ left: compareLoc }}>
+        <div style={{ position: 'absolute'}}>
+          <p id = 'compare'>{compare}</p>
+          <p id = 'rightNow'>Right Now</p>
+        </div>
       </div>
-      <div id = 'highest'>52 Week High
-      <p id='highest'>${highest}</p></div>
-    </div>
-  </div>
+      <div id = 'chart' >
+        {allData.map(priceData => <Chart key = {priceData[3]} priceData = {priceData} />)}
+      </div>
+      <div className='bottomLine'>
+        <span id = 'bottomFrontLine' style={{ width: curPriceDis > 670 ? 670 : curPriceDis }}></span>
+        <span id = 'circle' ></span>
+        <span id = 'bottomRareLine' style={{ width: 670 - curPriceDis }}></span>
+      </div>
+      <div style={{ display: 'inline-block', width: '670px' }}>
+        <div id='lowest'>52 Week Low
+        <p id='lowest'>${lowest}</p></div>
+        <div id = 'averagePricePaid' style={{ marginLeft: avgPriceDis ? avgPriceDis : 0 }}>
+          <p className='averagePricePaid'>Average Price Paid</p>
+          <p className='averagePricePaid' id='averagePricePaid'>${averagePrice}</p>
+        </div>
+        <div id='highest'>52 Week High
+        <p id='highest'>${highest}</p></div>
+      </div>
+      </div>
     );
   }
 }

@@ -1,19 +1,24 @@
-const mongoose = require('mongoose');
-const nosqlSchema = require('./nosqlSchema.js');
+var MongoClient = require('mongodb').MongoClient;
 
-const db = mongoose.connect('mongodb://localhost/stock', { useNewUrlParser: true },
-  (err) => err ? console.log(err) : console.log('Connected to MongoDB')
-);
+var _db;
 
-mongoose.Promise = global.Promise;
-
-const getPaidPrice = (id, callback) => {
-  const query = { id };
-  nosqlSchema.Stock.find(query, (err, data) => {
-    if (err) callback(err);
-    callback(data);
-  });
+module.exports = {
+  connectToServer: function( callback ) {
+    MongoClient.connect('mongodb://localhost:27017/',  { useNewUrlParser: true }, function( err, client ) {
+      _db  = client.db('stock');
+      return callback(err);
+    });
+  },
+  getDb: function() {
+    return _db;
+  },
+  getPrices: function(reqId, callback) {
+    var query = {};
+    query['id'] = parseInt(reqId);
+    _db.collection('companyPrices').find(query).toArray((err, data) => {
+      if (err) console.log(err);
+      callback(data);
+      // db.close();
+    });
+  }
 };
-
-module.exports = db;
-module.exports.getPaidPrice = getPaidPrice;

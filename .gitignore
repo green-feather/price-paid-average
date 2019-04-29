@@ -1,3 +1,6 @@
 grunt-aws.json
 node_modules
 npm
+.env
+newrelic.js
+hello.yml

@@ -1,6 +1,8 @@
-grunt-aws.json
+node_modules/
 node_modules
+grunt-aws.json
 npm
 .env
 newrelic.js
 hello.yml
+newrelic*

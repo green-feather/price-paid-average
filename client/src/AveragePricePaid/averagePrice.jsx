@@ -1,6 +1,5 @@
 import React from 'react';
 import Chart from './chart.jsx';
-import axios from 'axios';
 import '../styles.css';
 
 // const port = '52.53.224.110';
@@ -19,24 +18,9 @@ class AveragePrice extends React.Component {
   componentDidMount() {
     const splitUrl = window.location.pathname.split('/');
     const cId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
-    // this.getPrices(cId);
     this._isMounted = true;
     this._isMounted && this.getPrices(cId);
   }
-  // componentDidMount() {
-  //   this.getPrices(path);
-    // $.get(`http://${port}:8080/api/price/${path}`, (stockData) => {
-    //   const priceData = [];
-    //   console.log(stockdata);
-      // this.setState({
-      //   price: stockData
-      // })
-      // stockData.map(stock => priceData.push(stock.price));
-      // this.setState({
-      //   price: priceData,
-      // });
-    // });
-  // }
 
   componentWillUnmount() {
     this._isMounted = false;

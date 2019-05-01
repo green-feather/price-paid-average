@@ -25,7 +25,7 @@ db.connectToServer((err) => {
 
 app.get('/api/price/:id', (req, res) => {
   db.getPrices(req.params.id, (data) => {
-      res.status(200).json(data);
+    res.status(200).json(data);
   })
 });
 

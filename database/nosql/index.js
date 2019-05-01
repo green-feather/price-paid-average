@@ -9,16 +9,12 @@ module.exports = {
       return callback(err);
     });
   },
-  getDb: function() {
-    return _db;
-  },
   getPrices: function(reqId, callback) {
     var query = {};
     query['id'] = parseInt(reqId);
-    _db.collection('companyPrices').find(query).toArray((err, data) => {
+    _db.collection('companyPrices').find(query).project({prices: 1, _id: 0}).toArray((err, data) => {
       if (err) throw err;
-      callback(null, data);
-      // db.close();
+      callback(data);
     });
   }
 };

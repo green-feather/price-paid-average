@@ -16,8 +16,8 @@ module.exports = {
     var query = {};
     query['id'] = parseInt(reqId);
     _db.collection('companyPrices').find(query).toArray((err, data) => {
-      if (err) console.log(err);
-      callback(data);
+      if (err) throw err;
+      callback(null, data);
       // db.close();
     });
   }

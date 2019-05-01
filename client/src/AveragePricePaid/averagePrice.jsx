@@ -12,36 +12,31 @@ class AveragePrice extends React.Component {
     this.state = {
       price: [],
     };
-    this._isMounted = false;
+    // this._isMounted = false;
   }
 
   componentDidMount() {
     const splitUrl = window.location.pathname.split('/');
     const cId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
-    this._isMounted = true;
-    this._isMounted && this.getPrices(cId);
+    // this._isMounted = true;
+    // this._isMounted && this.getPrices(cId);
+    this.getPrices(cId);
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
- }
+//   componentWillUnmount() {
+//     this._isMounted = false;
+//  }
 
   getPrices(cId) {
     fetch(`/api/price/${cId}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-      .then(response => response.json())
-      .then((data) => {
-        if (this._isMounted) {
+      headers: {'Content-Type': 'application/json'},
+    }).then(response => response.json()
+    ).then(data => {
+        // if (this._isMounted) {
           const priceData = data[0].prices;
-          this.setState({
-            price: priceData,
-          })
-        }
-      })
-      .catch((err) => console.log(err))
+          this.setState({price: priceData,})
+        // }
+    }).catch(err => console.log(err))
   }
 
   render() {

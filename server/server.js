@@ -23,21 +23,9 @@ db.connectToServer((err) => {
   console.log('Connected to database');
 });
 
-// app.get('/:id', (req, res) => {
-//   res.status(200).sendFile(path.resolve(__dirname, '../public/index.html'));
-// });
-
-// app.get('/api/price', (req, res) => {
-//   // set Default data equal to 001
-//     db.getPaidPrice("001", (data) => {
-//       res.status(200).json(data)
-//     })
-// });
-
 app.get('/api/price/:id', (req, res) => {
-  console.log(req.params.id)
   db.getPrices(req.params.id, (data) => {
-    res.status(200).json(data);
+      res.status(200).json(data);
   })
 });
 

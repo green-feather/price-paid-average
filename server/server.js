@@ -18,10 +18,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-db.connectToServer((err) => {
-  if (err) throw err;
-  console.log('Connected to database');
-});
+// db.connectToServer((err) => {
+//   if (err) throw err;
+//   console.log('Connected to database');
+// });
 
 app.get('/api/price/:id', (req, res) => {
   db.getPrices(req.params.id, (data) => {

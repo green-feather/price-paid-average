@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "author": "Gary",
+  "author": "Angela",
   "license": "ISC",
   "engines": {
     "node": ">=6.13.0"

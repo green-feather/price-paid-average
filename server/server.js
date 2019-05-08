@@ -19,9 +19,9 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.get('/api/price/:id', (req, res) => {
-  db.getPrices(req.params.id, (data) => {
-    res.status(200).json(data);
-  })
+  db.getPrices(req.params.id, (err, data) => {
+    err ? res.sendStatus(500) : res.status(200).json(data);
+  });
 });
 
 app.listen(port, () => {

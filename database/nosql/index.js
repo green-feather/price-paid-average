@@ -18,8 +18,7 @@ module.exports = {
     var query = {};
     query['id'] = parseInt(reqId);
     coll.find(query).toArray((err, data) => {
-      if (err) throw err;
-      callback(data);
-    })
-    }
+      err ? callback(err) : callback(null, data);
+    });
+  }
 };

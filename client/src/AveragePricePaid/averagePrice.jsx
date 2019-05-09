@@ -2,40 +2,26 @@ import React from 'react';
 import Chart from './chart.jsx';
 import '../styles.css';
 
-// const port = '52.53.224.110';
-const port = 'localhost';
-const path = window.location.pathname;
-
 class AveragePrice extends React.Component {
   constructor() {
     super();
     this.state = {
       price: [],
     };
-    // this._isMounted = false;
   }
 
   componentDidMount() {
     const splitUrl = window.location.pathname.split('/');
     const cId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
-    // this._isMounted = true;
-    // this._isMounted && this.getPrices(cId);
     this.getPrices(cId);
   }
-
-//   componentWillUnmount() {
-//     this._isMounted = false;
-//  }
 
   getPrices(cId) {
     fetch(`/api/price/${cId}`, {
       headers: {'Content-Type': 'application/json'},
     }).then(response => response.json()
     ).then(data => {
-        // if (this._isMounted) {
-          const priceData = data[0].prices;
-          this.setState({price: priceData,})
-        // }
+      this.setState({price: data.prices,})
     }).catch(err => console.log(err))
   }
 

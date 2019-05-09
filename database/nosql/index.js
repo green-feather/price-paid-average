@@ -17,7 +17,7 @@ module.exports = {
   getPrices: function(reqId, callback) {
     var query = {};
     query['id'] = parseInt(reqId);
-    coll.find(query).toArray((err, data) => {
+    coll.findOne(query, (err, data) => {
       err ? callback(err) : callback(null, data);
     });
   }

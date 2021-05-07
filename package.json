@@ -38,7 +38,7 @@
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "file-loader": "^3.0.1",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.7.7",
     "jquery": "3.4.0",
     "json2csv": "^4.5.2",
     "lodash": "^4.17.15",
